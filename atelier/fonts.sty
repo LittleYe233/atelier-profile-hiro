@@ -27,7 +27,14 @@
 \IfFontExistsTF{Libertinus Serif}
   {\setmainfont{Libertinus Serif}}
   {\IfFontExistsTF{Noto Serif}
-    {\setmainfont{Noto Serif}}
+    % Use static Noto fonts in TeX Live distribution. The package should be
+    % installed already. Variable fonts in some Linux distros will cause
+    % invalid TTC index error in xdvipdfmx.
+    {\setsansfont{NotoSerif-Regular.ttf}[
+      BoldFont       = NotoSerif-Bold.ttf,
+      ItalicFont     = NotoSerif-Italic.ttf,
+      BoldItalicFont = NotoSerif-BoldItalic.ttf
+    ]}
     {\IfFontExistsTF{DejaVu Serif}
       {\setmainfont{DejaVu Serif}}
       {\IfFontExistsTF{EB Garamond}
@@ -37,7 +44,14 @@
 \IfFontExistsTF{Libertinus Sans}
   {\setsansfont{Libertinus Sans}}
   {\IfFontExistsTF{Noto Sans}
-    {\setsansfont{Noto Sans}}
+    % Use static Noto fonts in TeX Live distribution. The package should be
+    % installed already. Variable fonts in some Linux distros will cause
+    % invalid TTC index error in xdvipdfmx.
+    {\setsansfont{NotoSans-Regular.ttf}[
+      BoldFont       = NotoSans-Bold.ttf,
+      ItalicFont     = NotoSans-Italic.ttf,
+      BoldItalicFont = NotoSans-BoldItalic.ttf
+    ]}
     {\setsansfont{DejaVu Sans}}}
 
 \ifLuaTeX
@@ -57,8 +71,12 @@
 \ifXeTeX
   \RequirePackage{xeCJK}
   \IfFontExistsTF{Noto Serif CJK SC}{%
-    \setCJKmainfont{Noto Serif CJK SC}[BoldFont=Noto Serif CJK SC Bold]
-    \newCJKfontfamily\AtelierSCFamily{Noto Serif CJK SC}[BoldFont=Noto Serif CJK SC Bold]
+    % In some Linux distros, Noto CJK static fonts are still bundled to TTC
+    % packs with all weights, therefore no weight names are appended to each
+    % variant. In this case, there is no need to add redundant bold/italic
+    % variant options because of shared family names.
+    \setCJKmainfont{Noto Serif CJK SC}
+    \newCJKfontfamily\AtelierSCFamily{Noto Serif CJK SC}
   }{\IfFontExistsTF{SimSun}{%
     \setCJKmainfont{SimSun}[AutoFakeBold=2,AutoFakeSlant=0.18]
     \IfFontExistsTF{Noto Serif CJK JP}
@@ -85,8 +103,12 @@
         {\newCJKfontfamily\AtelierJPFamily{Microsoft YaHei}}
         {\newCJKfontfamily\AtelierJPFamily{FandolSong-Regular.otf}}}}
   \IfFontExistsTF{Noto Sans CJK SC}{%
-    \setCJKsansfont{Noto Sans CJK SC}[BoldFont=Noto Sans CJK SC Bold]
-    \newCJKfontfamily\AtelierSCSans{Noto Sans CJK SC}[BoldFont=Noto Sans CJK SC Bold]
+    % In some Linux distros, Noto CJK static fonts are still bundled to TTC
+    % packs with all weights, therefore no weight names are appended to each
+    % variant. In this case, there is no need to add redundant bold/italic
+    % variant options because of shared family names.
+    \setCJKsansfont{Noto Sans CJK SC}
+    \newCJKfontfamily\AtelierSCSans{Noto Sans CJK SC}
   }{\IfFontExistsTF{Microsoft YaHei}{%
     \setCJKsansfont{Microsoft YaHei}[AutoFakeBold=2]
     \newCJKfontfamily\AtelierSCSans{Microsoft YaHei}[AutoFakeBold=2]
